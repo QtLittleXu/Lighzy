@@ -2,7 +2,7 @@
 
 ## 介绍
 
-Lighzy 是一门简单易用的解释型编程语言，它是一种动态强类型定义语言，类似于 Python。Lighzy 即 "lighzy and easy"。
+Lighzy 是一门简单易用的解释型编程语言，它是一种静态强类型定义语言，类似于 Kotlin。Lighzy 之所以不像 Python 那样使用动态类型，是因为静态类型能够更早和方便地发现错误，所以更适合编程初学者，Lighzy 即 "lighzy and easy"。
 
 Lighzy 项目包含了 [Lighzy](https://github.com/QtLittleXu/lighzy-interpreter) 解释器（lighzy-interpreter）及计划开发的 Lighzy IDE（Lighdit）。
 

@@ -39,6 +39,18 @@ let add = fun(a, b)
 println(result)     // Cannot access result outside
 ```
 
+## 数据类型
+
+Lighzy 中的所有值都有其类型且一旦声明就不可改变，一下是 Lighzy 支持的数据类型：
+
+- Integer：64 位有符号整型
+- Float: 64 位双精度浮点数
+- Bool：1 位布尔型
+- String：长度不定，字符串型
+- Array：长度不定，数组型
+- Function：长度不定，函数型
+- Null：空类型
+
 ## 语句
 
 Lighzy 包含一些没有返回值的代码，这里称之为语句，以下是 Lighzy 的所有语句：
@@ -59,32 +71,36 @@ let add = fun(a, b)
 
 ### let 语句
 
-声明一个不可变变量，必须初始化。
+声明一个不可变变量，必须初始化，类型可根据初始值推导。
 
-**语法：**`let <identifier> = <value>`
+**语法：**`let <identifier>: <type> = <value>`
 
 ```swift
 
 // eg.
 let a = 123
 let b = test
+let c: string = "Hello world!"
 
-let c   // Error: variables must be initialized
-a = 1   // Error: cannot change immutable variables
+let c               // Error: immutable variable must be initialized
+a = 1               // Error: cannot change immutable variable
+let t: int = "text" // Error: variable type mismatch
 ```
 
 ### var 语句
 
-声明一个可变变量，必须初始化
+声明一个可变变量，如有初始值可根据初始值推导变量类型，否则必须显式指定类型。
 
-**语法：**`var <identifier> = <value>`
+**语法：**`var <identifier>: <type> = <value>`
 
 ```swift
 // eg.
 var a = 11
 a = 20
+var isReal: bool
 
-var b   // Error: variables must be initialized
+var str: string = 1 // Error: variable type mismatch
+var num             // Error: variable type must be specified explicitly if not initial value
 ```
 
 ### return 语句
@@ -169,7 +185,7 @@ false == 12 // Error: infix operand type mismatch
 
 ### 函数表达式
 
-用于返回一个定义的函数，Lighzy 中定义函数的操作就是用 let 语句存储函数表达式完成的。除非特殊需要，不建议使用 var 语句存储函数，因为它可以改变内部存储的值，大多数语言都希望用户不要改变存储的函数。
+用于返回一个定义的函数，Lighzy 中定义函数的操作就是用 let 语句存储函数表达式完成的。除非特殊需要，不建议使用 var 语句存储函数，因为它可以改变内部存储的值，大多数语言都希望用户不要改变存储的函数。函数参数可以拥有默认值，以便调用时不用全部赋值，默认参数必须全部定义在参数列表的末尾，否则解释器不知道如何赋值参数。
 
 **语法：**
 
@@ -190,11 +206,22 @@ let puts = fun(str)
 {
     println(str)
 }
+
+let add = fun(a = 0, b = 0)
+{
+    a + b
+}
+
+// Error: invalid declaration for default arguments
+let sub = fun(a = 0, b)
+{
+    a - b
+}
 ```
 
 ### 调用表达式
 
-调用一个函数表达式，如新形参数量与实参数量不符，则会发生错误。
+调用一个函数表达式，在没有默认参数的情况下，新形参数量与实参数量不符，则会发生错误。
 
 **语法：**`<function>(<arguments>)`
 
@@ -206,8 +233,17 @@ let add = fun(a, b)
 }
 
 let sum = add(1, 2)     // sum: 3
-
 let sum = add(21, 2, 2) // Error: invalid arguments: expected the number of them to be 2, but got 3
+
+// Default arguments
+let add = fun(a = 0, b = 0)
+{
+    a + b
+}
+
+add()       // Return 0
+add(12)     // Return 12
+add(2, 3)   // Return 5
 ```
 
 ### 赋值表达式
