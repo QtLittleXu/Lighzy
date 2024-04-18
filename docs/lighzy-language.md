@@ -53,7 +53,7 @@ The value in Lighzy has its own type and it cannot be changed if it has declared
 
 ## Statements
 
-The code that do not have the return value in Lighzy call Statement. Here are all statements:
+The code that do not have the return value in Lighzy is called Statement. Here are all statements:
 
 ### Expression Statement
 
@@ -146,5 +146,155 @@ while (count != 0)
 {
     println("Hello lighzy!")
     --count;
+}
+```
+
+## Expressions
+
+The code that returns a value in Lighzy is called Expression. The following are all expressions:
+
+### Prefix Expression
+
+Contains a prefix and a operand. It is an error that the type of the operand is mismatched with the prefix.
+
+**Syntax:** `<prefix> + <operand>`
+
+```swift
+// eg.
+-12         // Negative prefix
+--index     // Decrement prefix
+++i         // Increment prefix
+
+++"abcd"    // Error: the increment prefix is mismatched with the string
+```
+
+### Infix Expression
+
+Contains a infix and two operands. It is an error that types of operands are mismatched with the infix.
+
+**Syntax:** `<operand> + <infix> + <operand>`
+
+```swift
+// eg.
+1 + 1       // Plus infix
+2 != 3      // Logical infix
+
+false == 12 // Error: the infix is mismatched with operands
+```
+
+### Function Expression
+
+Used to return a defined function. Defining a function in Lighzy is to use let expression to store function expression. It is not recommended to store function expression into var statement except specific need, because most languages want not to let the user to change stored functions. Arguments of functions can have initial values so that there is no need to assign all arguments. Default arguments have to be declared at the end of the parameter list otherwise the interpreter does not understand how to assign arguments.
+
+**Syntax:**
+
+```swift
+fun(<arguments>)
+{
+    // Do something here
+    <statements>
+}
+
+// eg.
+let add = fun(a, b)
+{
+    return a + b
+}
+
+let puts = fun(str)
+{
+    println(str)
+}
+
+let add = fun(a = 0, b = 0)
+{
+    a + b
+}
+
+// Error: invalid declaration for default arguments
+let sub = fun(a = 0, b)
+{
+    a - b
+}
+```
+
+### Calling Expression
+
+Used to call function expression. It is wrong that formal arguments are not matched with actual arguments with out default arguments.
+
+**Syntax:** `<function>(<arguments>)`
+
+```swift
+// eg.
+let add = fun(a, b)
+{
+    return a + b
+}
+
+let sum = add(1, 2)     // sum: 3
+let sum = add(21, 2, 2) // Error: invalid arguments: expected the number of them to be 2, but got 3
+
+// Default arguments
+let add = fun(a = 0, b = 0)
+{
+    a + b
+}
+
+add()       // Return 0
+add(12)     // Return 12
+add(2, 3)   // Return 5
+```
+
+### Assignment Expression
+
+Used to assign a variable declared with var statement. They are wrong that types are mismatched and attempt to assign a variable declared with let statement.
+
+**Syntax:**
+
+```swift
+<variable> = <value>
+
+var num = 12
+num = 2
+
+num = "de"  // Error: assignment operand type error
+let a = 11
+a = 1       // Error: cannot change immutable variable
+```
+
+### If Expression
+
+Unlike most languages, the condition in Lighzy is an expression. So there is a return value which the value of the last expression. If the condition is true, the `if` code block is about to be executed otherwise the `else` one. The `else` code block is optional.
+
+**Syntax:**
+
+```swift
+if (<condition>)
+{
+    // Do something when condition is true
+    <statements>
+}
+else
+{
+    // Do something when condition is false
+    <statement>
+}
+
+// eg.
+let status = false
+let result = if (status)
+{
+    true
+}
+// result: true
+
+let value = 11
+if (value == 11)
+{
+    println("value: 11")
+}
+else
+{
+    println("value: i don't know")
 }
 ```
