@@ -1,5 +1,10 @@
 # Lighzy Documentation
 
+## Translations
+
+[English](lighzy-language.md)  
+[简体中文](lighzy-language-zh-CN.md)  
+
 ## Keywords
 
 Keywords are special identifiers in Lighzy. The naming of identifiers except keywords cannot conflict with them. Here are all keywords in Lighzy:
